@@ -32,9 +32,6 @@ vim.keymap.set("v", "<C-a>", function() end)
 -- Copy line/block
 -- TODO
 
--- Jump to search result in file
--- TODO
-
 -- Jump to end of word/line/diagnostic/etc
 -- TODO
 
