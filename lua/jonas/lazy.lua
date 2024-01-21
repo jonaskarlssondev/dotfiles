@@ -34,7 +34,16 @@ require("lazy").setup({
     },
     {
         'nvim-treesitter/nvim-treesitter',
-        run = ':TSUpdate'
+        build = ':TSUpdate'
+        config = function()
+            local configs = require("nvim-treesitter.configs")
+            configs.setup({
+                ensure_installed = { "lua", "javascript", "typescript", "go", "rust", "vim", "html", "css" }
+                sync_install = false,
+                highlight = { enable = true },
+                indent = { enable = true },
+            })
+        end
     },
     {
         "folke/trouble.nvim",
@@ -75,12 +84,11 @@ require("lazy").setup({
 
             -- And you can configure cmp even more, if you want to.
             local cmp = require('cmp')
-            local cmp_action = lsp_zero.cmp_action()
 
             cmp.setup({
                 formatting = lsp_zero.cmp_format(),
                 mapping = cmp.mapping.preset.insert({
-                        ['<C-Space>'] = cmp.mapping.complete(),
+                        ['<C-Space>'] = cmp.mapping.complete({ reason = cmp.ContextReason.Auto }),
                         ['<C-e>'] = cmp.mapping.abort(),
                         ['<CR>'] = cmp.mapping.confirm({ select = true}),
 

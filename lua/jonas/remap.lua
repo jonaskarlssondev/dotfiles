@@ -8,6 +8,12 @@ end)
 -- Utility functions
 vim.keymap.set({ "n", "v", "i" }, "<C-s>", "<C-c>:update<cr>", { silent = true, desc = "Save" })
 
+-- Notes for Search and Replace
+-- Search: /foo, Enter to jump, <n> for next, <N> for previous
+-- Replace: :s/foo/bar/g - in line, all matches
+-- Replace: :%s/<\foo\>/bar/g - all lines, exact match of foo
+-- Replace: :%s/<\foo\>/bar/gc - all lines, exact match of foo, ask for confirmation
+-- Replace: :%s/<\foo\>/bar/gci - all lines, exact match of foo, ask for confirmation, case insensitive
 
 -- navigation while in insert mode
 vim.keymap.set("i", "<C-j>", "<Down>")
@@ -27,6 +33,10 @@ vim.keymap.set("v", "<C-a>", function() end)
 -- TODO
 
 -- Jump to search result in file
+-- TODO
+
+-- Jump to end of word/line/diagnostic/etc
+-- TODO
 
 -- HARPOON
 local harpoon = require("harpoon")
@@ -45,7 +55,12 @@ vim.keymap.set("n", "<C-q>", function() harpoon:list():prev() end)
 vim.keymap.set("n", "<C-w>", function() harpoon:list():next() end)
 
 -- LSP ZERO
+-- See inside lazy.lua
 
+-- TROUBLE
+vim.keymap.set("n", "<C-t>", function() require("trouble").toggle() end)
+vim.keymap.set("n", "<C-o>", function() require("trouble").next({skip_groups = true, jump = true}) end)
+vim.keymap.set("n", "<C-p>", function() require("trouble").previous({skip_groups = true, jump = true}) end)
 
 -- TELESCOPE
 local builtin = require("telescope.builtin")
