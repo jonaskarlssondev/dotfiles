@@ -34,6 +34,7 @@ vim.keymap.set("v", "<C-a>", function() end)
 -- Jump to end of word/line/diagnostic/etc
 -- TODO
 
+
 -- HARPOON
 local harpoon = require("harpoon")
 harpoon:setup()
@@ -48,7 +49,7 @@ vim.keymap.set("n", "<C-e>", function() harpoon.ui:toggle_quick_menu(harpoon:lis
 vim.keymap.set("n", "<C-q>", function() harpoon:list():prev() end)
 vim.keymap.set("n", "<C-w>", function() harpoon:list():next() end)
 
--- LSP ZERO
+-- LSP
 -- See inside lazy.lua
 
 -- TROUBLE

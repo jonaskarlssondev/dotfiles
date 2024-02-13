@@ -46,6 +46,13 @@ require("lazy").setup({
         end
     },
     {
+        'windwp/nvim-autopairs',
+        event = "InsertEnter",
+        opts = {
+            enable_check_bracket_line = false
+        },
+    },
+    {
         "folke/trouble.nvim",
         config = function()
             require("trouble").setup {
@@ -84,13 +91,16 @@ require("lazy").setup({
 
             -- And you can configure cmp even more, if you want to.
             local cmp = require('cmp')
+            local cmp_action = lsp_zero.cmp_action()
 
             cmp.setup({
                 formatting = lsp_zero.cmp_format(),
                 mapping = cmp.mapping.preset.insert({
-                        ['<C-Space>'] = cmp.mapping.complete({ reason = cmp.ContextReason.Auto }),
+                        ['<C-Space>'] = cmp.mapping.complete(),
                         ['<C-e>'] = cmp.mapping.abort(),
                         ['<CR>'] = cmp.mapping.confirm({ select = true}),
+                        ['<C-f>'] = cmp_action.luasnip_jump_forward(),
+                        ['<C-b>'] = cmp_action.luasnip_jump_backward(),
 
                 })
             })
