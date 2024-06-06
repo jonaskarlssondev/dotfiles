@@ -53,6 +53,9 @@ require("lazy").setup({
         },
     },
     {
+        'windwp/nvim-ts-autotag'
+    },
+    {
         "folke/trouble.nvim",
         config = function()
             require("trouble").setup {

@@ -6,7 +6,12 @@ vim.keymap.set("n", "<leader>f", function()
 end)
 
 -- Utility functions
-vim.keymap.set({ "n", "v", "i" }, "<C-s>", "<C-c>:update<cr>", { silent = true, desc = "Save" })
+vim.keymap.set({ "n", "v", "i" }, "<C-s>", function()
+    vim.lsp.buf.format({ async = true })
+    vim.cmd(":Update")
+    vim.cmd(":w")
+    vim.cmd(":stopinsert")
+end, { silent = true, desc = "Save" })
 
 -- Notes for Search and Replace
 -- Search: /foo, Enter to jump, <n> for next, <N> for previous
@@ -35,6 +40,15 @@ vim.keymap.set("v", "<C-a>", function() end)
 -- TODO
 
 
+-- Search
+vim.keymap.set("n", "<Esc>", "<cmd>nohlsearch<CR>")
+
+-- JUMP back and forth
+
+vim.keymap.set("n", "[d", vim.diagnostic.goto_prev, { desc = "Go to prev [D]iagnostics msg" })
+vim.keymap.set("n", "]d", vim.diagnostic.goto_prev, { desc = "Go to next [D]iagnostics msg" })
+
+
 -- HARPOON
 local harpoon = require("harpoon")
 harpoon:setup()
@@ -54,8 +68,8 @@ vim.keymap.set("n", "<C-w>", function() harpoon:list():next() end)
 
 -- TROUBLE
 vim.keymap.set("n", "<C-t>", function() require("trouble").toggle() end)
-vim.keymap.set("n", "<C-o>", function() require("trouble").next({skip_groups = true, jump = true}) end)
-vim.keymap.set("n", "<C-p>", function() require("trouble").previous({skip_groups = true, jump = true}) end)
+vim.keymap.set("n", "<C-o>", function() require("trouble").next({ skip_groups = true, jump = true }) end)
+vim.keymap.set("n", "<C-p>", function() require("trouble").previous({ skip_groups = true, jump = true }) end)
 
 -- UNDOTREE
 vim.keymap.set("n", "<leader>ut", vim.cmd.UndotreeToggle)
