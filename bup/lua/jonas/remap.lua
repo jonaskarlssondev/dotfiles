@@ -40,8 +40,7 @@ vim.keymap.set("v", "<C-a>", function() end) --TODO
 -- TODO
 
 
--- Search
-vim.keymap.set("n", "<Esc>", "<cmd>nohlsearch<CR>")
+
 
 -- JUMP back and forth
 
@@ -53,7 +52,7 @@ vim.keymap.set("n", "]d", vim.diagnostic.goto_prev, { desc = "Go to next [D]iagn
 local harpoon = require("harpoon")
 harpoon:setup()
 
-vim.keymap.set("n", "<leader>a", function() harpoon:list():append() end)
+vim.keymap.set("n", "<leader>a", function() harpoon:list():add() end)
 vim.keymap.set("n", "<C-e>", function() harpoon.ui:toggle_quick_menu(harpoon:list()) end)
 --vim.keymap.set("n", "<C-1>", function() harpoon:list():select(1) end)
 --vim.keymap.set("n", "<C-2>", function() harpoon:list():select(2) end)
