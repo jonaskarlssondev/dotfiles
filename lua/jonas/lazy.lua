@@ -21,7 +21,7 @@ require("lazy").setup({
     {
         "rose-pine/neovim",
         name = "rose-pine",
-        lazy = false, -- make sure we load this during startup if it is your main colorscheme
+        lazy = false,    -- make sure we load this during startup if it is your main colorscheme
         priority = 1000, -- make sure to load this before all the other start plugins
         config = function()
             vim.cmd("colorscheme rose-pine")
@@ -99,12 +99,10 @@ require("lazy").setup({
             cmp.setup({
                 formatting = lsp_zero.cmp_format(),
                 mapping = cmp.mapping.preset.insert({
-                        ['<C-Space>'] = cmp.mapping.complete(),
-                        ['<C-e>'] = cmp.mapping.abort(),
-                        ['<CR>'] = cmp.mapping.confirm({ select = true}),
-                        ['<C-f>'] = cmp_action.luasnip_jump_forward(),
-                        ['<C-b>'] = cmp_action.luasnip_jump_backward(),
-
+                    ['<C-e>'] = cmp.mapping.abort(),                    -- close info window
+                    ['<CR>'] = cmp.mapping.confirm({ select = false }), -- confirm selected choice
+                    ['<C-f>'] = cmp_action.luasnip_jump_forward(),      -- currently unclear
+                    ['<C-b>'] = cmp_action.luasnip_jump_backward(),
                 })
             })
         end

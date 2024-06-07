@@ -31,7 +31,7 @@ vim.keymap.set({ "n", "i" }, "<C-a>", function() vim.cmd(":m -2") end)
 vim.keymap.set({ "n", "i" }, "<C-d>", function() vim.cmd(":m +1") end)
 
 -- move block up/down
-vim.keymap.set("v", "<C-a>", function() end)
+vim.keymap.set("v", "<C-a>", function() end) --TODO
 
 -- Copy line/block
 -- TODO
@@ -63,8 +63,13 @@ vim.keymap.set("n", "<C-e>", function() harpoon.ui:toggle_quick_menu(harpoon:lis
 vim.keymap.set("n", "<C-q>", function() harpoon:list():prev() end)
 vim.keymap.set("n", "<C-w>", function() harpoon:list():next() end)
 
+-- AUTOCOMPLETE
+-- See lazy.lua for config, but in general
+-- <C-e> to abort autocompletion
+-- <CR> to confirm selection
+
 -- LSP
--- See inside lazy.lua
+-- See in
 
 -- TROUBLE
 vim.keymap.set("n", "<C-t>", function() require("trouble").toggle() end)
