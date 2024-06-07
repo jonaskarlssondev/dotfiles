@@ -1,4 +1,3 @@
--- Initialization of lazy
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 if not vim.loop.fs_stat(lazypath) then
     vim.fn.system({
@@ -12,25 +11,26 @@ if not vim.loop.fs_stat(lazypath) then
 end
 vim.opt.rtp:prepend(lazypath)
 
--- Now configure
+vim.g.mapleader = " "
 
 require("lazy").setup({
-    -- STYLING
+    "folke/tokyonight.nvim",
+    "nvim-lua/plenary.nvim",
+    "nvim-telescope/telescope.nvim",
+    "mbbill/undotree",
     {
-        "folke/tokyonight.nvim",
-        name = "tokyonight",
+        "rose-pine/neovim",
+        name = "rose-pine",
         lazy = false,    -- make sure we load this during startup if it is your main colorscheme
         priority = 1000, -- make sure to load this before all the other start plugins
         config = function()
-            vim.cmd("colorscheme tokyonight-moon")
+            vim.cmd("colorscheme rose-pine")
         end
     },
-
-    -- PLUMBING
-    { -- INSTALLATION
-        'williamboman/mason.nvim',
-        lazy = false,
-        config = true,
+    {
+        "ThePrimeagen/harpoon",
+        branch = "harpoon2",
+        dependencies = { "nvim-lua/plenary.nvim" }
     },
     {
         'nvim-treesitter/nvim-treesitter',
@@ -45,31 +45,16 @@ require("lazy").setup({
             })
         end
     },
-
-    -- NAVIGATION
     {
-        "nvim-telescope/telescope.nvim",
-        dependencies = { "nvim-lua/plenary.nvim" }
-    },
-    {
-        "ThePrimeagen/harpoon",
-        branch = "harpoon2",
-        dependencies = { "nvim-lua/plenary.nvim" }
-    },
-
-    -- EDITING
-    { -- insert matching closing bracket
         'windwp/nvim-autopairs',
         event = "InsertEnter",
         opts = {
             enable_check_bracket_line = false
         },
     },
-    { -- auto close and auto rename html tags
+    {
         'windwp/nvim-ts-autotag'
     },
-
-    -- DEBUGGING
     {
         "folke/trouble.nvim",
         config = function()
@@ -78,9 +63,6 @@ require("lazy").setup({
             }
         end
     },
-    "mbbill/undotree",
-
-    -- LSP
     {
         'VonHeikemen/lsp-zero.nvim',
         branch = 'v3.x',
@@ -93,36 +75,12 @@ require("lazy").setup({
         end,
     },
     {
-        'neovim/nvim-lspconfig',
-        cmd = { 'LspInfo', 'LspInstall', 'LspStart' },
-        event = { 'BufReadPre', 'BufNewFile' },
-        dependencies = {
-            { 'hrsh7th/cmp-nvim-lsp' },
-            { 'williamboman/mason-lspconfig.nvim' },
-        },
-        config = function()
-            local lsp_zero = require('lsp-zero')
-            lsp_zero.extend_lspconfig()
-
-            lsp_zero.on_attach(function(client, bufnr)
-                lsp_zero.default_keymaps({ buffer = bufnr })
-            end)
-
-            require('mason-lspconfig').setup({
-                ensure_installed = {},
-                handlers = {
-                    lsp_zero.default_setup,
-                    lua_ls = function()
-                        -- (Optional) Configure lua language server for neovim
-                        local lua_opts = lsp_zero.nvim_lua_ls()
-                        require('lspconfig').lua_ls.setup(lua_opts)
-                    end,
-                }
-            })
-        end
+        'williamboman/mason.nvim',
+        lazy = false,
+        config = true,
     },
 
-    -- AUTOCOMPLETION
+    -- Autocompletion
     {
         'hrsh7th/nvim-cmp',
         event = 'InsertEnter',
@@ -130,6 +88,7 @@ require("lazy").setup({
             { 'L3MON4D3/LuaSnip' },
         },
         config = function()
+            -- Here is where you configure the autocompletion settings.
             local lsp_zero = require('lsp-zero')
             lsp_zero.extend_cmp()
 
@@ -148,4 +107,40 @@ require("lazy").setup({
             })
         end
     },
+
+    -- LSP
+    {
+        'neovim/nvim-lspconfig',
+        cmd = { 'LspInfo', 'LspInstall', 'LspStart' },
+        event = { 'BufReadPre', 'BufNewFile' },
+        dependencies = {
+            { 'hrsh7th/cmp-nvim-lsp' },
+            { 'williamboman/mason-lspconfig.nvim' },
+        },
+        config = function()
+            -- This is where all the LSP shenanigans will live
+            local lsp_zero = require('lsp-zero')
+            lsp_zero.extend_lspconfig()
+
+            --- if you want to know more about lsp-zero and mason.nvim
+            --- read this: https://github.com/VonHeikemen/lsp-zero.nvim/blob/v3.x/doc/md/guides/integrate-with-mason-nvim.md
+            lsp_zero.on_attach(function(client, bufnr)
+                -- see :help lsp-zero-keybindings
+                -- to learn the available actions
+                lsp_zero.default_keymaps({ buffer = bufnr })
+            end)
+
+            require('mason-lspconfig').setup({
+                ensure_installed = {},
+                handlers = {
+                    lsp_zero.default_setup,
+                    lua_ls = function()
+                        -- (Optional) Configure lua language server for neovim
+                        local lua_opts = lsp_zero.nvim_lua_ls()
+                        require('lspconfig').lua_ls.setup(lua_opts)
+                    end,
+                }
+            })
+        end
+    }
 })
