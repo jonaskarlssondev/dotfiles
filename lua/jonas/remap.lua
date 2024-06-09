@@ -1,9 +1,36 @@
---VIM
-vim.keymap.set("n", "<C-u>", vim.cmd.Ex)
+-- NAVIGATION
+-- jump to next/prev empty line ({ / })
+-- jump to open/close bracket ([{ / ]})
 
-vim.keymap.set("n", "<leader>f", function()
-    vim.lsp.buf.format()
-end)
+-- jump to first character in line (fX)
+-- jump to first previous character in line (FX)
+-- jump to previous word (b) / previous third word (B)
+-- jump to next word (w) / next third word (W)
+vim.keymap.set("n", "W", "3w")
+vim.keymap.set("n", "W", "3w")
+
+vim.keymap.set("n", "[d", vim.diagnostic.goto_prev, { desc = "Go to prev [D]iagnostics msg" })
+vim.keymap.set("n", "]d", vim.diagnostic.goto_prev, { desc = "Go to next [D]iagnostics msg" })
+
+-- navigation while in insert mode
+vim.keymap.set("i", "<C-j>", "<Down>")
+vim.keymap.set("i", "<C-k>", "<Up>")
+vim.keymap.set("i", "<C-h>", "<Left>")
+vim.keymap.set("i", "<C-l>", "<Right>")
+
+-- EDIT
+-- replace w1 with w2 on current line (:s/w1/w2/g)
+-- replace w1 with w2 in current file (:%s/w1/w2/g)
+-- replace last search with w2 in current file (:%s//w2/g)
+-- delete from cursor onwards (S-c)
+
+-- move line up/down
+vim.keymap.set({ "n", "i" }, "<C-a>", function() vim.cmd(":m -2") end)
+vim.keymap.set({ "n", "i" }, "<C-d>", function() vim.cmd(":m +1") end)
+
+-- SEARCH
+-- Search for word under cursor (*)
+vim.keymap.set("n", "<Esc>", "<cmd>nohlsearch<CR>") -- press escape to remove search highlight
 
 -- UTILITY FUNCTIONS
 vim.keymap.set({ "n", "v", "i" }, "<C-s>", function()
@@ -13,23 +40,12 @@ vim.keymap.set({ "n", "v", "i" }, "<C-s>", function()
     vim.cmd(":stopinsert")
 end, { silent = true, desc = "Save" })
 
--- navigation while in insert mode
-vim.keymap.set("i", "<C-j>", "<Down>")
-vim.keymap.set("i", "<C-k>", "<Up>")
-vim.keymap.set("i", "<C-h>", "<Left>")
-vim.keymap.set("i", "<C-l>", "<Right>")
+--VIM
+vim.keymap.set("n", "<C-u>", vim.cmd.Ex)
 
--- move line up/down
-vim.keymap.set({ "n", "i" }, "<C-a>", function() vim.cmd(":m -2") end)
-vim.keymap.set({ "n", "i" }, "<C-d>", function() vim.cmd(":m +1") end)
-
--- Search
-vim.keymap.set("n", "<Esc>", "<cmd>nohlsearch<CR>")
-
-vim.keymap.set("n", "[d", vim.diagnostic.goto_prev, { desc = "Go to prev [D]iagnostics msg" })
-vim.keymap.set("n", "]d", vim.diagnostic.goto_prev, { desc = "Go to next [D]iagnostics msg" })
-
-
+vim.keymap.set("n", "<leader>f", function()
+    vim.lsp.buf.format()
+end)
 
 -- PLUGINS
 -- HARPOON
@@ -37,6 +53,7 @@ local harpoon = require("harpoon")
 harpoon:setup()
 
 vim.keymap.set("n", "<leader>a", function() harpoon:list():add() end)
+vim.keymap.set("n", "<leader>r", function() harpoon:list():remove() end)
 vim.keymap.set("n", "<C-e>", function() harpoon.ui:toggle_quick_menu(harpoon:list()) end)
 --vim.keymap.set("n", "<C-1>", function() harpoon:list():select(1) end)
 -- Toggle previous & next buffers stored within Harpoon list

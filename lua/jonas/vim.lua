@@ -23,7 +23,7 @@ vim.opt.smartindent = true
 vim.opt.wrap = false
 
 -- ignore case while searching unless \C or one or more capital letter in search term
-vim.opt.ignorecase = true
+-- vim.opt.ignorecase = true
 vim.opt.smartcase = true
 
 -- col left for icons etc
