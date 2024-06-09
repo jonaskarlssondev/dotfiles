@@ -54,11 +54,11 @@ harpoon:setup()
 
 vim.keymap.set("n", "<leader>a", function() harpoon:list():add() end)
 vim.keymap.set("n", "<leader>r", function() harpoon:list():remove() end)
-vim.keymap.set("n", "<C-e>", function() harpoon.ui:toggle_quick_menu(harpoon:list()) end)
+vim.keymap.set("n", "<C-r>", function() harpoon.ui:toggle_quick_menu(harpoon:list()) end)
 --vim.keymap.set("n", "<C-1>", function() harpoon:list():select(1) end)
 -- Toggle previous & next buffers stored within Harpoon list
 vim.keymap.set("n", "<C-q>", function() harpoon:list():prev() end)
-vim.keymap.set("n", "<C-w>", function() harpoon:list():next() end)
+vim.keymap.set("n", "<C-e>", function() harpoon:list():next() end)
 
 -- AUTOCOMPLETE
 -- See lazy.lua for config, but in general
